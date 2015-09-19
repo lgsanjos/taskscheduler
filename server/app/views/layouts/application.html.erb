@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Scheduler</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Task Scheduler</a>
+      </div>
+      <div id="navbar">
+        <ul class="nav navbar-nav">
+          <% 
+            selected = yield :active_page 
+            logs_class, task_class, about_class = ''
+
+            logs_class = 'active' if selected.eql? 'logs'
+            task_class = 'active' if selected.empty?
+            about_class = 'active' if selected.eql? 'about'
+          %>
+          <li class="<%=logs_class%>"><%= link_to 'Logs', :controller => :task_execution %></li>
+          <li class="<%=task_class%>"><%= link_to 'Tasks', :controller => :tasks %></li>
+          <li class="<%=about_class%>"><%= link_to 'about', :controller => :about %></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<%= yield %>
+
+</body>
+</html>

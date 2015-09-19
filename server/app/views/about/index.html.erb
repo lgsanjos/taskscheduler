@@ -1,0 +1,33 @@
+<% content_for :active_page do %>about<% end %>
+<div class="container about">
+  <h1>Task Scheduler</h1>
+
+  <h2>About</h2>
+  <hr />
+  <p>This is a solution to trigger tasks around distributed computers, here on this <b>website</b> you can register <%= link_to 'new tasks', new_task_path %> and monitor the execution of them <%= link_to 'here', :controller => :task_execution %>.</p>
+
+  <h2>How to: </h2>
+  <hr />
+  <h3>Download the agent</h3>
+  <ul>
+    <li>You can <b>download</b> the client agent clicking <%= link_to 'here', 'http://github.com/lgsanjos/taskscheduler/agent.rb'%> or on the root path of this server.</li>
+  </ul>
+  <h3>Install and run</h3>
+  <ul>
+    <li>Copy the agent.rb file to computer which will run the job</li>
+    <li>Make sure the client have have Ruby install</li>
+    <li>Run on terminal 'ruby agent.rb'</li>
+  </ul>
+  <h3>Register a new task</h3>
+  <ul>
+    <li>Once you run the agent it will print on console a unique key</li>
+    <li>Go to new task page</li>
+    <li>Fill the key field with the client key</li>
+    <li>Fill the start, end date and the days fo week that the job should execute</li>
+    <li>On Path field add the path of the script to be executed or a command line</li>
+  </ul>
+  <h3>Wait and see</h3>
+  <ul>
+    <li>Here on log page you can see the jobs status</li>
+  </ul>
+</div>

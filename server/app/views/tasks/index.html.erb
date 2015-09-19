@@ -1,0 +1,37 @@
+<div class="container">
+
+  <p id="notice"><%= notice %></p>
+
+  <h1>Listing Tasks</h1>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Days</th>
+        <th>Path</th>
+        <th>Key</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.name %></td>
+          <td><%= task.start.strftime("%F %T") %></td>
+          <td><%= task.end.strftime("%F %T") %></td>
+          <td><%= task.days %></td>
+          <td><%= task.path.truncate(7) %></td>
+          <td><%= task.key.truncate(7) %></td>
+          <td><%= link_to 'Show', task %></td>
+          <td><%= link_to 'Edit', edit_task_path(task) %></td>
+          <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+
+  <%= link_to 'New Task', new_task_path, :class => 'btn btn-default' %>
+</div>
