@@ -13,7 +13,7 @@
   <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Task Scheduler</a>
+        <%= link_to 'Task Scheduler', '/' ,:class => 'navbar-brand' %>
       </div>
       <div id="navbar">
         <ul class="nav navbar-nav">
@@ -21,13 +21,13 @@
             selected = yield :active_page 
             logs_class, task_class, about_class = ''
 
-            logs_class = 'active' if selected.eql? 'logs'
-            task_class = 'active' if selected.empty?
             about_class = 'active' if selected.eql? 'about'
+            task_class = 'active' if selected.empty?
+            logs_class = 'active' if selected.eql? 'logs'
           %>
-          <li class="<%=logs_class%>"><%= link_to 'Logs', :controller => :task_execution %></li>
+          <li class="<%=about_class%>"><%= link_to 'About', :controller => :about %></li>
           <li class="<%=task_class%>"><%= link_to 'Tasks', :controller => :tasks %></li>
-          <li class="<%=about_class%>"><%= link_to 'about', :controller => :about %></li>
+          <li class="<%=logs_class%>"><%= link_to 'Logs', :controller => :task_execution %></li>
         </ul>
       </div>
     </div>

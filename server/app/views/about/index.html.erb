@@ -10,24 +10,24 @@
   <hr />
   <h3>Download the agent</h3>
   <ul>
-    <li>You can <b>download</b> the client agent clicking <%= link_to 'here', 'http://github.com/lgsanjos/taskscheduler/agent.rb'%> or on the root path of this server.</li>
+    <li>You can <b>download</b> the client agent clicking <%= link_to 'here', 'https://github.com/lgsanjos/taskscheduler/blob/master/agent.rb'%> or on the root path of this server.</li>
   </ul>
   <h3>Install and run</h3>
   <ul>
     <li>Copy the agent.rb file to computer which will run the job</li>
-    <li>Make sure the client have have Ruby install</li>
-    <li>Run on terminal 'ruby agent.rb'</li>
+    <li>Make sure the client have have <b>Ruby installed</b></li>
+    <li>Run on terminal '<b>ruby agent.rb</b>'</li>
   </ul>
   <h3>Register a new task</h3>
   <ul>
     <li>Once you run the agent it will print on console a unique key</li>
-    <li>Go to new task page</li>
-    <li>Fill the key field with the client key</li>
-    <li>Fill the start, end date and the days fo week that the job should execute</li>
-    <li>On Path field add the path of the script to be executed or a command line</li>
+    <li>Go to <%= link_to 'new task page', new_task_path %></li>
+    <li>Fill the <b>key field</b> with the client key</li>
+    <li>Fill the <b>start</b>, <b>end date</b> and the <b>days of week</b> that the job should execute</li>
+    <li>On <b>path field</b> add the path of the script to be executed or a command line</li>
   </ul>
   <h3>Wait and see</h3>
   <ul>
-    <li>Here on log page you can see the jobs status</li>
+    <li>Here on <%= link_to 'log page', :controller => :task_execution %> you can see the jobs status</li>
   </ul>
 </div>

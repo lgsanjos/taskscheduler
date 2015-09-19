@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'about/index'
 
   # consumed by cli agent
   get 'tasks/data/:token' => 'tasks#task'
@@ -12,6 +11,7 @@ Rails.application.routes.draw do
   # consumed by website
 
   resources :tasks
-  root 'task_execution#index'
+  get 'task_execution/index'
 
+  root 'about#index'
 end
