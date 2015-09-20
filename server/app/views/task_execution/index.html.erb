@@ -6,8 +6,11 @@
       <tr>
         <th>Task execution id</th>
         <th>Task name</th>
+        <th>Start date</th>
         <th>Start time</th>
+        <th>End date</th>
         <th>End time</th>
+        <th>Execution time</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -21,8 +24,11 @@
         <tr class="<%=status%>">
           <td><%=exec.id%></td>
           <td><%=exec.task.name%></td>
-          <td><%=exec.start.strftime("%F %T")%></td>
-          <td><%=exec.end.strftime("%FT%T") unless exec.end.nil? %></td>
+          <td><%=exec.start.strftime("%F")%></td>
+          <td><%=exec.start.strftime("%T")%></td>
+          <td><%=exec.end.strftime("%F") unless exec.end.nil? %></td>
+          <td><%=exec.end.strftime("%T") unless exec.end.nil? %></td>
+          <td><%=Time.at(exec.end - exec.start).utc.strftime("%T:%L") unless exec.end.nil? %></td>
           <td><%=exec.status%></td>
         </tr>
       <% end %>

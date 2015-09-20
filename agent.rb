@@ -4,17 +4,30 @@ require "rubygems"
 require 'securerandom'
 require 'json'
 require 'date'
+require 'time'
 
 require 'net/http'
 require 'uri'
 
-def generate_token
+def read_key_from_file
+  file_name = './key.id'
+
+  if File.exist?(file_name) 
+    key = File.read(file_name) 
+    puts "Keep using key = #{key}"
+    return key 
+  end
+
+  new_key = generate_key
+  File.write(file_name, "#{new_key}")
+  new_key
+end
+
+def generate_key
   token = SecureRandom.hex(64)
-  token = 'f9f899d42b498bdb760e559a6bcc13a1bd7de3c5339a6158418738cf1d2f6d9ffc6d8f98897c154f3055042e88217fb7a30e6939951cbba536516cc13c541f76'
-  puts 'This is the agent token:'
-  puts token
-  puts 'Add this to link this agent with the server'
-  puts ' ** This token will be regenerated when the agent restart'
+  puts 'Generating new Key:'
+  puts " New key = #{token}"
+  puts '  Use this key to link this agent with the server'
   token
 end
 
@@ -28,8 +41,55 @@ def send_data_to_server(data, server_url)
   Net::HTTP.post_form(server_url, data).body
 end
 
+def can_execute_today(days_allawed)
+  today = DateTime.now.strftime("%A").downcase.slice(0..2)  
+  today_is_allowed = days_allawed.include? today
+
+  puts '  Check days allowed:'
+  if (today_is_allowed)
+    puts "  allowed!"
+  else
+    puts "  not allowed!"
+  end
+
+  puts "    Allowed: #{days_allawed}"
+  puts "    Today = #{today}"
+
+  return true if today_is_allowed
+  false
+end
+
+def can_execute_right_now(min_time, max_time)
+  time = DateTime.now.to_time
+  right_now_is_allowed = time > min_time and time < max_time
+
+  puts 'Check time in range:'
+  if (right_now_is_allowed)
+    puts "  allowed!"
+  else
+    puts "  not allowed!"
+  end
+
+  puts "    allowed: #{min_time.strftime("%H:%M:%S")} and #{max_time.strftime("%H:%M:%S")}"
+  puts "    right now: #{time.strftime("%H:%M:%S")}"
+
+  return true if right_now_is_allowed
+  false
+end
+
+
 def should_execute_task(data)
-  return true
+
+  min_time = Time.parse(data['start'])
+  max_time = Time.parse(data['end'])
+
+  puts "Task: #{data['name']}"
+  return false unless can_execute_today(data['days'])
+  puts " "
+  return false unless can_execute_right_now(min_time, max_time)
+  puts " "
+
+  true
 end
 
 def submit_start_task(token, task)
@@ -51,7 +111,7 @@ puts 'Starting agent'
 
 @server_endpoint_prefix = 'http://localhost:3000/'
 puts "Server address: #{@server_endpoint_prefix}"
-token = generate_token
+token = read_key_from_file
 
 tasks = request_data_from_server(token)
 puts 'Tasks received from server'
