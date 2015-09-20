@@ -124,7 +124,7 @@ begin
         puts 'executing...'
         exec_id = submit_start_task(token, task)
         puts "  created execution id: #{exec_id}"
-        system task['path']
+        system task['path'] or raise 'Something went wrong :/'
       rescue
         submit_failure_task(exec_id)
         puts '  updated status to failed'
